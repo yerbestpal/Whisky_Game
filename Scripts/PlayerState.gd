@@ -1,12 +1,13 @@
 # PlayerState.gd
 extends GameState
 
-onready var global_vars = get_node('/root/GlobalVariables')
+@onready var global_vars = get_node("/root/GlobalVariables")
+
 
 func enter(_msg := {}) -> void:
 	global_vars.active_player = str(global_vars.ActivePlayer.PLAYER)
-	$'../../RollButton'.visible = true
-	$'../../RollButton'.disabled = false
+	$"../../RollButton".visible = true
+	$"../../RollButton".disabled = false
 
 	game.participant_node.hand = game.ActivePlayerHands[global_vars.ActivePlayer.PLAYER]
 	game.participant_node.name = global_vars.active_player
@@ -15,12 +16,14 @@ func enter(_msg := {}) -> void:
 
 	global_vars.turn += 1
 
-	$'../../ActivePlayerLabel'.text = str("Player 1")
-	$'../../EndTurnButton'.visible = false
+	$"../../ActivePlayerLabel".text = str("Player 1")
+	$"../../EndTurnButton".visible = false
+
 
 func exit() -> void:
-	$'../../EndTurnButton'.visible = false
-	$'../../EndTurnButton'.disabled = true
+	$"../../EndTurnButton".visible = false
+	$"../../EndTurnButton".disabled = true
+
 
 # Called when the node enters the scene tree for the first time.
 #func _ready() -> void:
@@ -32,4 +35,4 @@ func exit() -> void:
 
 
 func _on_EndTurnButton_pressed() -> void:
-	state_machine.transition_to('Bot1State')
+	state_machine.transition_to("Bot1State")

@@ -9,28 +9,33 @@ signal transitioned(state_name)
 
 # Path to the initial active state. We export it to be able to pick the initial
 # state in the inspector.
-export var initial_state := NodePath()
+@export var initial_state := NodePath()
 
 # The current active state. At the start of the game, we get the `initial_state`.
-onready var state: State = get_node(initial_state)
+@onready var state: State = get_node(initial_state)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	yield(owner, 'ready')
+	await owner.ready
 	for child in get_children():
 		child.state_machine = self
 	state.enter()
+
 
 # The state machine subscribes to node callbacks and delegates them to the state
 # objects.
 func _unhandled_input(event: InputEvent) -> void:
 	state.handle_input(event)
 
+
 func _process(delta: float) -> void:
 	state.update(delta)
 
+
 func _physics_process(delta: float) -> void:
 	state.physics_update(delta)
+
 
 # This function calls the current state's `exit()` function, then changes the
 # active state and calls its `enter()` function.
@@ -48,4 +53,4 @@ func transition_to(target_state_name: String, msg: Dictionary = {}) -> void:
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter(msg)
-	emit_signal('transitioned', state.name)
+	emit_signal("transitioned", state.name)

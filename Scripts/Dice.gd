@@ -1,6 +1,5 @@
 extends Label
 
-
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
@@ -11,7 +10,6 @@ func _ready() -> void:
 #	self.get_font('font').size = 1
 #	$TextureRect.rect_scale = Vector2(0.5, 0.5)
 	pass
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
